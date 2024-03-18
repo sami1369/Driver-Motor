@@ -1,3 +1,0 @@
-C:/Users/samis/projects/Driver-Motor/sample_project/build/CMakeFiles/CMakeTmp/CMakeFiles/cmTC_ebcd9.dir
-C:/Users/samis/projects/Driver-Motor/sample_project/build/CMakeFiles/CMakeTmp/CMakeFiles/edit_cache.dir
-C:/Users/samis/projects/Driver-Motor/sample_project/build/CMakeFiles/CMakeTmp/CMakeFiles/rebuild_cache.dir

@@ -1,7 +1,7 @@
 {
     "version":            "1",
     "project_name":       "DriverMotor",
-    "project_version":    "b5bd20f-dirty",
+    "project_version":    "dc1a112-dirty",
     "project_path":       "C:/Users/samis/projects/Driver-Motor/sample_project",
     "idf_path":           "C:/Users/samis/esp/v4.4.7/esp-idf",
     "build_dir":          "C:/Users/samis/projects/Driver-Motor/sample_project/build",
@@ -848,7 +848,7 @@
             "managed_reqs": [],
             "managed_priv_reqs": [],
             "file": "C:/Users/samis/projects/Driver-Motor/sample_project/build/esp-idf/main/libmain.a",
-            "sources": [ "C:/Users/samis/projects/Driver-Motor/sample_project/main/main.cpp" ],
+            "sources": [ "C:/Users/samis/projects/Driver-Motor/sample_project/main/main.cpp", "C:/Users/samis/projects/Driver-Motor/sample_project/main/gpio.cpp" ],
             "include_dirs": [ ".", "../include" ]
         },
         "mbedtls": {

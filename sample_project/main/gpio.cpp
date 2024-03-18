@@ -29,7 +29,26 @@ namespace CPPGPIO
 
     esp_err_t Gpio::on(void)
     {
-        return gpio_set_level(m_pin, 1);
+        m_level = true;
+        return gpio_set_level(m_pin, m_active_low ? 0 : 1);
+    }
+
+    esp_err_t Gpio::off(void)
+    {
+        m_level = false;
+        return gpio_set_level(m_pin, m_active_low ? 0 : 1);
+    }
+
+    esp_err_t Gpio::toggle(void)
+    {
+        m_level = m_level ? 0 : 1;
+        return gpio_set_level(m_pin, m_active_low ? 0 : 1);
+    }
+
+    esp_err_t Gpio::setLevel(int level)
+    {
+        m_level = m_active_low ? !level : level;
+        return gpio_set_level(m_pin, m_level);
     }
 
 } // Namespace CPPGPIO

@@ -17,6 +17,11 @@ namespace CPPGPIO
         Gpio(const gpio_num_t pin, const bool activeLow);
 
         esp_err_t on(void);
+        esp_err_t off(void);
+        esp_err_t toggle(void);
+        esp_err_t setLevel(int level);
+
+    
 
     }; // GpioBase Class
 

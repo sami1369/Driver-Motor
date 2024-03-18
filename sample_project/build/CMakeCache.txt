@@ -115,7 +115,7 @@ CMAKE_EXE_LINKER_FLAGS_RELWITHDEBINFO:STRING=
 CMAKE_EXPORT_COMPILE_COMMANDS:BOOL=
 
 //Install path prefix, prepended onto install directories.
-CMAKE_INSTALL_PREFIX:PATH=C:/Program Files (x86)/HelloCMake
+CMAKE_INSTALL_PREFIX:PATH=C:/Program Files (x86)/DriverMotor
 
 //Path to a program.
 CMAKE_LINKER:FILEPATH=C:/Users/samis/.espressif/tools/xtensa-esp32-elf/esp-2021r2-patch5-8.4.0/xtensa-esp32-elf/bin/xtensa-esp32-elf-ld.exe
@@ -159,7 +159,7 @@ CMAKE_PROJECT_DESCRIPTION:STATIC=
 CMAKE_PROJECT_HOMEPAGE_URL:STATIC=
 
 //Value Computed by CMake
-CMAKE_PROJECT_NAME:STATIC=HelloCMake
+CMAKE_PROJECT_NAME:STATIC=DriverMotor
 
 //Path to a program.
 CMAKE_RANLIB:FILEPATH=C:/Users/samis/.espressif/tools/xtensa-esp32-elf/esp-2021r2-patch5-8.4.0/xtensa-esp32-elf/bin/xtensa-esp32-elf-ranlib.exe
@@ -226,6 +226,15 @@ CMAKE_TOOLCHAIN_FILE:FILEPATH=C:/Users/samis/esp/v4.4.7/esp-idf/tools/cmake/tool
 // Studio IDE projects all commands are done without /nologo.
 CMAKE_VERBOSE_MAKEFILE:BOOL=FALSE
 
+//Value Computed by CMake
+DriverMotor_BINARY_DIR:STATIC=C:/Users/samis/projects/Driver-Motor/sample_project/build
+
+//Value Computed by CMake
+DriverMotor_IS_TOP_LEVEL:STATIC=ON
+
+//Value Computed by CMake
+DriverMotor_SOURCE_DIR:STATIC=C:/Users/samis/projects/Driver-Motor/sample_project
+
 //Build Mbed TLS programs.
 ENABLE_PROGRAMS:BOOL=
 
@@ -240,15 +249,6 @@ ESP_PLATFORM:UNINITIALIZED=1
 
 //Git command line client
 GIT_EXECUTABLE:FILEPATH=C:/Espressif/tools/idf-git/2.43.0/cmd/git.exe
-
-//Value Computed by CMake
-HelloCMake_BINARY_DIR:STATIC=C:/Users/samis/projects/Driver-Motor/sample_project/build
-
-//Value Computed by CMake
-HelloCMake_IS_TOP_LEVEL:STATIC=ON
-
-//Value Computed by CMake
-HelloCMake_SOURCE_DIR:STATIC=C:/Users/samis/projects/Driver-Motor/sample_project
 
 //IDF Build Target
 IDF_TARGET:STRING=esp32

@@ -1,16 +1,19 @@
-#include <stdio.h>
 
 #include "gpio.h"
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
-#include "sdkconfig.h"
+
+
+
 
 extern "C" void app_main(void)
 {
-    CPPGPIO::Gpio Led{GPIO_NUM_2, 0};
-    Led.on();
+    Gpio *led1, *key1; 
+    led1 = new Gpio{GPIO_NUM_2, false, GPIO_MODE_OUTPUT};
+    key1= new Gpio{GPIO_NUM_15, false, GPIO_MODE_INPUT};
+    
     while (true)
     {
-        vTaskDelay(1000 / portTICK_PERIOD_MS);
+        led1->setLevel(key1->read());
     }
 }

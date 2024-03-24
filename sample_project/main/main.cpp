@@ -1,49 +1,84 @@
 #include "main.h"
-#include "mqtt_client.h"
-#include "esp_log.h" //log out put, do not use printf everywhere
+#include "freertos/FreeRTOS.h" //it is important too if you want to run mqtt task independently and provides threads funtionality
+#include "freertos/task.h"     //MQTT communication often involves asynchronous operations, and FreeRTOS helps handle those tasks effectively
+#include "esp_log.h"           //log out put, do not use printf everywhere
+#include "mqtt_client.h" //provides important functions to connect with MQTT
+#include "esp_event.h"
+#define BROKER_URL "mqtt://login:aio_xxx@io.adafruit.com"
+#define IO_TOPIC "Sami1990/feeds/LED"
+Main AppWifi;
+static const char *TAG = "mqtt_example";
 
-Main App;
+static esp_err_t mqtt_event_handler(esp_mqtt_event_handle_t event)
+{
+    int msg_id;
+
+    switch (event->event_id)
+    {
+    case MQTT_EVENT_CONNECTED:
+        ESP_LOGI(TAG, "MQTT_EVENT_CONNECTED");
+        // msg_id = esp_mqtt_client_publish(event->client, "Sami1990/Feeds/LED", "11", 0, 1, 0);
+
+        break;
+
+    case MQTT_EVENT_DISCONNECTED:
+        ESP_LOGI(TAG, "MQTT_EVENT_DISCONNECTED");
+        break;
+
+    case MQTT_EVENT_SUBSCRIBED:
+        ESP_LOGI(TAG, "MQTT_EVENT_SUBSCRIBED, msg_id=%d", event->msg_id);
+        break;
+
+    case MQTT_EVENT_UNSUBSCRIBED:
+        ESP_LOGI(TAG, "MQTT_EVENT_UNSUBSCRIBED, msg_id=%d", event->msg_id);
+        break;
+
+    case MQTT_EVENT_PUBLISHED:
+        ESP_LOGI(TAG, "MQTT_EVENT_PUBLISHED, msg_id=%d", event->msg_id);
+        break;
+
+    case MQTT_EVENT_DATA:
+        ESP_LOGI(TAG, "MQTT_EVENT_DATA");
+        break;
+
+    case MQTT_EVENT_ERROR:
+        ESP_LOGI(TAG, "MQTT_EVENT_ERROR");
+        break;
+
+    default:
+        ESP_LOGI(TAG, "Other event id:%d", event->event_id);
+        break;
+    }
+    return ESP_OK;
+}
 
 extern "C" void app_main(void)
 {
-    App.setup();
+    esp_mqtt_client_handle_t client;
+    esp_err_t error;
+    AppWifi.setup();
+    vTaskDelay(pdMS_TO_TICKS(1000));
+    // MQTT config
+    esp_mqtt_client_config_t mqtt_cfg = {};
+    mqtt_cfg.uri = "use your broker";
+    mqtt_cfg.port = 1883;
+    mqtt_cfg.event_handle = mqtt_event_handler;
+    mqtt_cfg.username = "username in adafruit io";
+    mqtt_cfg.password = "key generated in Adafruit";
+    client = esp_mqtt_client_init(&mqtt_cfg);
+    error = esp_mqtt_client_start(client);
+    ESP_LOGI(TAG, "Client cond %d", error);
 
     while (true)
     {
         vTaskDelay(pdMS_TO_TICKS(10000));
-        App.run();
-    }
-}
-static const char *TAG = "MQTT ";
-// here esp_mqtt_event_handle_t is a struct which receieves struct event from mqtt app start funtion
-static void mqtt_event_handler(esp_mqtt_event_handle_t event)
-{
-    // making obj client of struct esp_mqtt_client_handle_t and assigning it the receieved event client
-    esp_mqtt_client_handle_t client = event->client; 
-    if (event->event_id == MQTT_EVENT_CONNECTED)
-    {
-        ESP_LOGI(TAG, "MQTT_EVENT_CONNECTED");
-        esp_mqtt_client_subscribe(client, "LEDon", 0); // in mqtt we require a topic to subscribe and client is from event client and 0 is quality of service it can be 1 or 2
-        ESP_LOGI(TAG, "sent subscribe successful");
-    }
-    else if (event->event_id == MQTT_EVENT_DISCONNECTED)
-    {
-        ESP_LOGI(TAG, "MQTT_EVENT_DISCONNECTED"); // if disconnected
-    }
-    else if (event->event_id == MQTT_EVENT_SUBSCRIBED)
-    {
-        ESP_LOGI(TAG, "MQTT_EVENT_SUBSCRIBED");
-    }
-    else if (event->event_id == MQTT_EVENT_UNSUBSCRIBED) // when subscribed
-    {
-        ESP_LOGI(TAG, "MQTT_EVENT_UNSUBSCRIBED");
-    }
-    else if (event->event_id == MQTT_EVENT_DATA) // when unsubscribed
-    {
-        ESP_LOGI(TAG, "MQTT_EVENT_DATA");
-    }
-    else if (event->event_id == MQTT_EVENT_ERROR) // when any error
-    {
-        ESP_LOGI(TAG, "MQTT_EVENT_ERROR");
+        AppWifi.run();
+
+        client = esp_mqtt_client_init(&mqtt_cfg);
+        error = esp_mqtt_client_start(client);
+        ESP_LOGI(TAG, "Client cond %d", error);
+        esp_mqtt_client_publish(client, "Sami1990/feeds/LED", "1", 0, 1, 0);
+
+        // AppMqtt.run();
     }
 }
